@@ -1,0 +1,396 @@
+/* Base container */
+.creative-container {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #050505 0%, #0A0F1A 50%, #111827 100%);
+  color: #FFFFFF;
+  font-family: 'Geist', 'Inter var', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+
+/* Layout */
+.interface-layout {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Side Panel */
+.side-panel {
+  background: linear-gradient(180deg, 
+    rgba(5, 5, 5, 0.95) 0%,
+    rgba(10, 15, 26, 0.95) 100%
+  );
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  position: relative;
+  height: 100vh;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.side-panel::-webkit-scrollbar {
+  width: 4px;
+}
+
+.side-panel::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.side-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.side-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Brand */
+.brand {
+  position: sticky;
+  top: 0;
+  padding-bottom: 1rem;
+  background: inherit;
+  z-index: 10;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.8));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-subtitle {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0.5rem;
+}
+
+/* Search */
+.search-container {
+  position: sticky;
+  top: 4rem;
+  margin-bottom: 1.5rem;
+  z-index: 10;
+  background: inherit;
+  padding-bottom: 1rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  transition: color 0.2s ease;
+  width: 14px;
+  height: 14px;
+}
+
+.search-field {
+  width: 100%;
+  height: 40px;
+  padding: 0 2.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  color: white;
+  font-family: inherit;
+  font-size: 0.875rem;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.search-field:focus {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+  outline: none;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.search-field:focus + .search-icon {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Filter System */
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  animation: fadeIn 0.4s ease forwards;
+  opacity: 0;
+}
+
+.filter-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-left: 0.5rem;
+}
+
+.filter-option {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-option:hover {
+  border-color: var(--genre-color, rgba(255, 255, 255, 0.1));
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.filter-option.active {
+  background: var(--genre-background, rgba(255, 255, 255, 0.03));
+  border-color: var(--genre-color, rgba(255, 255, 255, 0.15));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.filter-count {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: var(--genre-background, rgba(255, 255, 255, 0.03));
+  color: var(--genre-color, rgba(255, 255, 255, 0.5));
+  position: relative;
+  z-index: 1;
+  min-width: 2rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Content Grid */
+.content-grid {
+  background: rgba(10, 10, 10, 0.98);
+  padding: 2rem;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+  height: 100vh;
+}
+
+/* Artist Cards */
+.artist-item {
+  height: 200px;
+  background: rgba(10, 10, 10, 0.98);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.artist-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.artist-item:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.artist-item:hover::before {
+  opacity: 1;
+}
+
+.artist-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.artist-header {
+  margin-bottom: auto;
+}
+
+.artist-name {
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(
+    to right,
+    var(--artist-color, #fff) 20%,
+    var(--artist-accent, rgba(255, 255, 255, 0.8)) 80%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.artist-item:hover .artist-name {
+  transform: translateY(-4px);
+}
+
+.artist-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--artist-color, rgba(255, 255, 255, 0.4));
+  opacity: 0.6;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.artist-item:hover .artist-meta {
+  transform: translateY(-4px);
+  opacity: 0.8;
+}
+
+.genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.artist-item:hover .genre-list {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.genre-tag {
+  padding: 0.25rem 0.5rem;
+  background: var(--genre-background, rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--genre-color, rgba(255, 255, 255, 0.6));
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.genre-tag:hover {
+  border-color: var(--genre-color, rgba(255, 255, 255, 0.15));
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 50;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.artist-item {
+  animation: fadeIn 0.4s cubic-bezier(0.2, 0, 0, 1) backwards;
+}
+
+.artist-item:nth-child(n) {
+  animation-delay: calc(n * 0.05s);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .interface-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .side-panel {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(20px);
+    padding: 1.5rem;
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .side-panel {
+    padding: 1rem;
+  }
+
+  .artist-item {
+    height: 180px;
+  }
+}
